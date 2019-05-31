@@ -140,6 +140,7 @@ dependencies {
     testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
 
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
 
 }

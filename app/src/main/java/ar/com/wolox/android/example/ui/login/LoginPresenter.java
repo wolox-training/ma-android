@@ -10,59 +10,20 @@ import ar.com.wolox.wolmo.core.presenter.BasePresenter;
 
 class LoginPresenter extends BasePresenter<ILoginView> {
 
-    /*UserSession mUserSession;
-    @Inject
-    LoginPresenter(UserSession mUserSession) {
-        this.mUserSession = mUserSession;
-    }
-    */
-
+    public static final String CONSTANT_KEY_MAIL = "Mail";
+    public static final String CONSTANT_KEY_PASSWORD = "Password";
     @Inject
     LoginPresenter() {
 
     }
 
-    void storeUsername(String text) {
-
-    }
-
-    // AGREGUEE
     void storeUser(String mail, String password, Activity loginActivity) {
-        CharSequence error = null;
-        //SharedPreferences sharedPref = getDefaultSharedPreferences(Context.MODE_PRIVATE);
-        //SharedPreferences sharedPref = loginActivity.getSharedPreferences(Context.MODE_PRIVATE);
-        //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(loginActivity.getApplicationContext());
-        /* SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("Mail", mail);
-        editor.putString("Password", password);
-        editor.commit();
-        getView().onSignUpFinished("Estas registrado");
-        */
         SharedPreferences sharedPref = loginActivity.getSharedPreferences("UserSession", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("Mail", mail);
-        editor.putString("Password", password);
+        editor.putString(CONSTANT_KEY_MAIL, mail);
+        editor.putString(CONSTANT_KEY_PASSWORD, password);
         editor.commit();
         getView().onSignUpFinished("Estas registrado");
     }
 
-    void signupUser(String mail, String password) {
-
-    }
-
 }
-
-/*  fun storeUsername(text: String) {
-    }
-
-class ExamplePresenter @Inject constructor(private val mUserSession: UserSession) : BasePresenter<IExampleView>() {
-
-@Inject constructor( UserSession mUserSession )
-
-    fun storeUsername(text: String) {
-        mUserSession.username = text
-        view.onUsernameSaved()
-    }
-}
-
-    */

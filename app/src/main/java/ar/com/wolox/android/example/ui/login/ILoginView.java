@@ -1,24 +1,8 @@
 package ar.com.wolox.android.example.ui.login;
 /**
- * hghm
- */
-
-/*
-package ar.com.wolox.android.example.ui.example
-
-interface IExampleView {
-
-    fun onUsernameSaved()
-}
-
-*/
-
-/**
- * Comment
+ * Login View.
  */
 public interface ILoginView {
-
-    //void onLoginFinished(CharSequence error);
 
     void onSignUpFinished(String message);
 
