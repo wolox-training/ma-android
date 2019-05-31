@@ -1,6 +1,9 @@
 package ar.com.wolox.android.example.ui.login;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.text.method.LinkMovementMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +25,7 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     private EditText passwordInput;
     private EditText mailInput;
     private TextView loginTextView;
+    private TextView conditionsTextView;
 
     @Inject
     LoginFragment() {
@@ -40,15 +44,17 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         signupButton = view.findViewById(R.id.vSignupButton);
         passwordInput = view.findViewById(R.id.vPasswordInput);
         loginTextView = view.findViewById(R.id.vLoginTextView);
+        conditionsTextView = view.findViewById(R.id.vConditionsTextView);
         mailInput = view.findViewById(R.id.vMailInput);
         mailInput.setText(getPresenter().getLastLoggeduser(getActivity()));
+        conditionsTextView.setMovementMethod(LinkMovementMethod.getInstance());
     }
     /**
      * set listeners
      */
     @Override
     public void setListeners() {
-        //sacar esto
+        //TODO: sacar esto
         loginButton.setOnClickListener(v -> {
             if ((mailInput.getText().toString().matches("")) || (passwordInput.getText().toString().matches(""))) {
                 passwordInput.requestFocus();
@@ -63,6 +69,11 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
                     getPresenter().storeUser(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
                 }
             }
+        });
+        conditionsTextView.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+            browserIntent.setData(Uri.parse("http://www.wolox.com.ar"));
+            startActivity(browserIntent);
         });
     }
 
