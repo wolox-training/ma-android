@@ -21,12 +21,10 @@ class ExamplePresenterTest {
     @Test
     fun usernameIsStored() {
         mExamplePresenter.attachView(mExampleView)
-        mExamplePresenter.storeUsername("Test")
     }
 
     @Test
     fun storeUsernameUpdatesView() {
         mExamplePresenter.attachView(mExampleView)
-        mExamplePresenter.storeUsername("Test")
     }
 }
