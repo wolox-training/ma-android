@@ -24,7 +24,6 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     private Button signupButton;
     private EditText passwordInput;
     private EditText mailInput;
-    private TextView loginTextView;
     private TextView conditionsTextView;
 
     @Inject
@@ -43,12 +42,10 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         loginButton = view.findViewById(R.id.vLoginButton);
         signupButton = view.findViewById(R.id.vSignupButton);
         passwordInput = view.findViewById(R.id.vPasswordInput);
-        loginTextView = view.findViewById(R.id.vLoginTextView);
         conditionsTextView = view.findViewById(R.id.vConditionsTextView);
         mailInput = view.findViewById(R.id.vMailInput);
         mailInput.setText(getPresenter().getLastLoggeduser(getActivity()));
         conditionsTextView.setMovementMethod(LinkMovementMethod.getInstance());
-
     }
 
     /**
@@ -69,6 +66,7 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
                 startActivity(intent);
             }
         });
+
     }
 
     /**
