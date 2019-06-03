@@ -30,7 +30,6 @@ class LoginPresenter extends BasePresenter<ILoginView> {
         editor.putString(MAIL_KEY, mail);
         editor.putString(PASSWORD_KEY, password);
         editor.commit();
-        getView().onSignUpFinished("Estas registrado");
     }
 
 }
