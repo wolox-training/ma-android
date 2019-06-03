@@ -10,18 +10,25 @@ import ar.com.wolox.wolmo.core.presenter.BasePresenter;
 
 class LoginPresenter extends BasePresenter<ILoginView> {
 
-    public static final String CONSTANT_KEY_MAIL = "Mail";
-    public static final String CONSTANT_KEY_PASSWORD = "Password";
+    private static final String MAIL_KEY = "mail";
+    private static final String PASSWORD_KEY = "password";
+    private static final String USER_SESSION_SHARE_PREFERENCE = "user_session";
+
     @Inject
     LoginPresenter() {
 
     }
 
-    void storeUser(String mail, String password, Activity loginActivity) {
-        SharedPreferences sharedPref = loginActivity.getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+    String getLastLoggeduser(Activity activity) {
+        SharedPreferences sharedPref = activity.getSharedPreferences(USER_SESSION_SHARE_PREFERENCE, Context.MODE_PRIVATE);
+        return sharedPref.getString(MAIL_KEY, null);
+    }
+
+    void storeUser(String mail, String password, Activity activity) {
+        SharedPreferences sharedPref = activity.getSharedPreferences(USER_SESSION_SHARE_PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(CONSTANT_KEY_MAIL, mail);
-        editor.putString(CONSTANT_KEY_PASSWORD, password);
+        editor.putString(MAIL_KEY, mail);
+        editor.putString(PASSWORD_KEY, password);
         editor.commit();
         getView().onSignUpFinished("Estas registrado");
     }

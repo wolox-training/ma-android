@@ -1,7 +1,5 @@
 package ar.com.wolox.android.example.ui.login;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.util.Patterns;
 import android.view.View;
@@ -32,7 +30,7 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
 
     @Override
     public int layout() {
-        return R.layout.fragment_example;
+        return R.layout.fragment_login;
     }
 
     @Override
@@ -43,11 +41,7 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         passwordInput = view.findViewById(R.id.vPasswordInput);
         loginTextView = view.findViewById(R.id.vLoginTextView);
         mailInput = view.findViewById(R.id.vMailInput);
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
-        String mail = sharedPref.getString("Mail", null);
-        String password = sharedPref.getString("Password", null);
-        mailInput.setText(mail);
-        passwordInput.setText(password);
+        mailInput.setText(getPresenter().getLastLoggeduser(getActivity()));
     }
     /**
      * set listeners
@@ -58,13 +52,13 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         loginButton.setOnClickListener(v -> {
             if ((mailInput.getText().toString().matches("")) || (passwordInput.getText().toString().matches(""))) {
                 passwordInput.requestFocus();
-                passwordInput.setError("Es necesario ingresar contraseña");
+                passwordInput.setError(getResources().getString(R.string.login_password_missing));
                 mailInput.requestFocus();
-                mailInput.setError("Es necesario ingresar mail");
+                mailInput.setError(getResources().getString(R.string.login_mail_missing));
             } else {
                 if (!Patterns.EMAIL_ADDRESS.matcher(mailInput.getText().toString()).matches()) {
                     mailInput.requestFocus();
-                    mailInput.setError("Un ejemplo de formato válido es example@domain.com");
+                    mailInput.setError(getResources().getString((R.string.login_mail_example)));
                 } else {
                     getPresenter().storeUser(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
                 }
