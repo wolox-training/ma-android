@@ -28,7 +28,6 @@ class LoginPresenter extends BasePresenter<ILoginView> {
         SharedPreferences sharedPref = activity.getSharedPreferences(USER_SESSION_SHARE_PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(MAIL_KEY, mail);
-        editor.putString(PASSWORD_KEY, password);
         editor.commit();
     }
 

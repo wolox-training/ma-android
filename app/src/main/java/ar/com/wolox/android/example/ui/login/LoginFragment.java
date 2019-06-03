@@ -1,15 +1,14 @@
 package ar.com.wolox.android.example.ui.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.text.method.LinkMovementMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import javax.inject.Inject;
-
 import ar.com.wolox.android.R;
 import ar.com.wolox.android.example.ui.home.HomeActivity;
 import ar.com.wolox.android.example.ui.signup.SignupActivity;
@@ -54,11 +53,12 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     @Override
     public void setListeners() {
         signupButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), SignupActivity.class);
-            startActivity(intent);
-
+            if (this.mailAndPasswordInputAreCorrect()) {
+                getPresenter().storeUser(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
+                Intent intent = new Intent(getActivity(), SignupActivity.class);
+                startActivity(intent);
+            }
         });
-
         loginButton.setOnClickListener(v -> {
             if (this.mailAndPasswordInputAreCorrect()) {
                 getPresenter().storeUser(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
@@ -66,11 +66,17 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
                 startActivity(intent);
             }
         });
-
+        conditionsTextView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                browserIntent.setData(Uri.parse("http://www.wolox.com.ar"));
+                startActivity(browserIntent);
+            }
+        });
     }
 
-    /**
-     * @return mailAndPasswordInputAreCorrect returns true when the user enters a valid email and a password. Otherwise, it returns false.
+    /** @return
+     *   mailAndPasswordInputAreCorrect returns true when the user enters a valid email and a password. Otherwise, it returns false.
      */
     private boolean mailAndPasswordInputAreCorrect() {
         if (mailInput.getText().toString().isEmpty()) {
