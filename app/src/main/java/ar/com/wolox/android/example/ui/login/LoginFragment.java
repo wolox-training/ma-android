@@ -48,8 +48,13 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         mailInput = view.findViewById(R.id.vMailInput);
         mailInput.setText(getPresenter().getLastLoggeduser(getActivity()));
         conditionsTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        mailInput.setText(getPresenter().getLastLoggeduser(getActivity()));
+        //TODO: Take out comment below as it is unit 2, card 2 resolutions
+        /*if (mail != null) {
+            Intent intent = new Intent(getActivity(), HomeActivity.class);
+            startActivity(intent);
+        } */
     }
-
     /**
      * set listeners
      */
@@ -57,15 +62,15 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     public void setListeners() {
         signupButton.setOnClickListener(v -> {
             if (this.mailAndPasswordInputAreCorrect()) {
-                getPresenter().storeUser(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
+                getPresenter().storeUser(mailInput.getText().toString(), getActivity());
                 Intent intent = new Intent(getActivity(), SignupActivity.class);
                 startActivity(intent);
             }
         });
         loginButton.setOnClickListener(v -> {
             if (this.mailAndPasswordInputAreCorrect()) {
-                getPresenter().getUserByMail(mailInput.getText().toString());
-                getPresenter().storeUser(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
+                getPresenter().getUserByMail(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
+                //getPresenter().getUserByMailOld(mailInput.getText().toString());
             }
         });
         conditionsTextView.setOnClickListener(new View.OnClickListener() {
@@ -99,29 +104,25 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     @Override
     public void onGetUserByMailFinished(Boolean userFound) {
         if (userFound) {
+            getPresenter().storeUser(mailInput.getText().toString(), getActivity());
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
         } else {
-            Toast toast = Toast.makeText(getContext(), "ERROR - Usuario no registrado", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getContext(), getResources().getString(R.string.mailOrPasswordIncorrect), Toast.LENGTH_LONG);
             toast.show();
         }
     }
-}
 
-/*
-class LoginFragment : WolmoFragment<LoginPresenter>(), IExampleView {
-
-    override fun layout(): Int = R.layout.fragment_example
-
-    override fun init() {
-        vLoginButton.isEnabled = false
+    @Override
+    public void onStop() {
+        super.onStop();
+        passwordInput.setText("");
     }
 
-    override fun setListeners() {
-        vUsernameInput.onTextChanged { vLoginButton.isEnabled = it.isNotBlank() }
-        vLoginButton.onClickListener {
-            presenter.storeUsername(vUsernameInput.text.toString())
->>>>>>> Feature: brings every user saved in the api to check if the email entered is already registered.
-        }
+    public void cellphoneIsDisconnecteed() {
+        Toast toast = Toast.makeText(getContext(), getResources().getString(R.string.cellphoneDisconnected), Toast.LENGTH_LONG);
+        toast.show();
     }
+
 }
+
