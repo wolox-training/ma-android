@@ -1,14 +1,15 @@
 package ar.com.wolox.android.example.ui.login;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.text.method.LinkMovementMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import javax.inject.Inject;
+
 import ar.com.wolox.android.R;
 import ar.com.wolox.android.example.ui.home.HomeActivity;
 import ar.com.wolox.android.example.ui.signup.SignupActivity;
@@ -49,14 +50,15 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         conditionsTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
+
     /**
      * set listeners
      */
     @Override
     public void setListeners() {
         signupButton.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), SignupActivity.class);
-                startActivity(intent);
+            Intent intent = new Intent(getActivity(), SignupActivity.class);
+            startActivity(intent);
 
         });
 
@@ -67,36 +69,24 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
                 startActivity(intent);
             }
         });
-        conditionsTextView.setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-            browserIntent.setData(Uri.parse(String.valueOf(R.string.woloxURL)));
-            startActivity(browserIntent);
-        });
     }
 
-
-    /** @return
-     *   mailAndPasswordInputAreCorrect returns true when the user enters a valid email and a password. Otherwise, it returns false.
+    /**
+     * @return mailAndPasswordInputAreCorrect returns true when the user enters a valid email and a password. Otherwise, it returns false.
      */
-    public boolean mailAndPasswordInputAreCorrect() {
-        if ((mailInput.getText().toString().matches("")) || (passwordInput.getText().toString().matches(""))) {
-            //textViewError.requestFocus();
-            //textViewError.setError("Todos los campos son necesarios");
-            passwordInput.requestFocus();
-            passwordInput.setError(getResources().getString(R.string.login_password_missing));
-            mailInput.requestFocus();
+    private boolean mailAndPasswordInputAreCorrect() {
+        if (mailInput.getText().toString().isEmpty()) {
             mailInput.setError("Es necesario ingresar mail");
             return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(mailInput.getText().toString()).matches()) {
+            mailInput.requestFocus();
+            mailInput.setError("Un ejemplo de formato válido es example@domain.com");
+            return false;
+        } else if (passwordInput.getText().toString().isEmpty()) {
+            passwordInput.setError(getResources().getString(R.string.login_password_missing));
+            return false;
         } else {
-            if (!Patterns.EMAIL_ADDRESS.matcher(mailInput.getText().toString()).matches()) {
-                //mailInput.requestFocus();
-                //mailInput.setError("Mail inválido");
-                mailInput.requestFocus();
-                mailInput.setError("Un ejemplo de formato válido es example@domain.com");
-                return false;
-            } else {
-                return true;
-            }
+            return true;
         }
     }
 }
