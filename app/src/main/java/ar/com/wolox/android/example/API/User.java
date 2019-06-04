@@ -99,7 +99,7 @@ public class User {
         this.phone = phone;
     }
 
-    public boolean isMyEmail(String mail) {
-        return (mail.compareTo(email) == 0);
+    public boolean isMyPassword(String inputPassword) {
+        return (password.compareTo(inputPassword) == 0);
     }
 }

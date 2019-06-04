@@ -1,8 +1,10 @@
 package ar.com.wolox.android.example.ui.login;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 
 import java.util.List;
 
@@ -33,62 +35,47 @@ class LoginPresenter extends BasePresenter<ILoginView> {
         return sharedPref.getString(MAIL_KEY, null);
     }
 
-    void storeUser(String mail, String password, Activity activity) {
+    void storeUser(String mail, Activity activity) {
         SharedPreferences sharedPref = activity.getSharedPreferences(USER_SESSION_SHARE_PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(MAIL_KEY, mail);
         editor.commit();
     }
 
-
-    public void getUsers() {
-        List<User> users = null;
-        Call<List<User>> call = userService.getUsers();
-        call.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                if (response.body() != null) {
-                    List<User> users = response.body();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-
-            }
-        });
-
+    public boolean checkInternetConnection(Activity activity) {
+        ConnectivityManager con = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return (con.getActiveNetworkInfo() != null && con.getActiveNetworkInfo().isAvailable() && con.getActiveNetworkInfo().isConnected());
     }
 
-    public void getUserByMail(String mail) {
-        List<User> users = null;
-        Call<List<User>> call = userService.getUsers();
-        call.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                if (response.body() != null) {
-                    List<User> users = response.body();
-                    if (isUserRegistered(users, mail)) {
-                        getView().onGetUserByMailFinished(true);
-                    } else {
-                        getView().onGetUserByMailFinished(false);
+    public void getUserByMail(String mail, String password, Activity activity) {
+        if (checkInternetConnection(activity)) {
+            Call<List<User>> call = userService.getUserByMail(mail, password);
+            ProgressDialog pd = new ProgressDialog(activity);
+            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pd.setTitle("Conectandose a la API");
+            pd.setMessage("Cargando ... ");
+            pd.show();
+            call.enqueue(new Callback<List<User>>() {
+                @Override
+                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                    if (response.body() != null) {
+                        if (response.body().size() != 0) {
+                            getView().onGetUserByMailFinished(true);
+                        } else {
+                            getView().onGetUserByMailFinished(false);
+                        }
                     }
+                    pd.dismiss();
                 }
-            }
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
 
-            }
-        });
-
-    }
-
-    boolean isUserRegistered(List<User> users, String mail) {
-        int i = 0;
-        while ((i < users.size()) && !(users.get(i).isMyEmail(mail))) {
-            i++;
+                @Override
+                public void onFailure(Call<List<User>> call, Throwable t) {
+                    pd.dismiss();
+                }
+            });
+        } else {
+            getView().cellphoneIsDisconnecteed();
         }
-        return i != users.size();
-
     }
+
 }

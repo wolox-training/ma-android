@@ -11,7 +11,7 @@ public final class APIClient {
     public static Retrofit retrofit;
 
     private APIClient() {
-        //not called
+        //not called aksdjaksd
     }
 
     public static Retrofit getRetrofitClient() {
