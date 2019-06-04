@@ -69,7 +69,7 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         });
         conditionsTextView.setOnClickListener(v -> {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-            browserIntent.setData(Uri.parse("http://www.wolox.com.ar"));
+            browserIntent.setData(Uri.parse(String.valueOf(R.string.woloxURL)));
             startActivity(browserIntent);
         });
     }
