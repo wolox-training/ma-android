@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".example.ui.example.ExampleActivity"
+            android:name=".example.ui.login.LoginActivity"
             android:screenOrientation="portrait">
 
             <intent-filter>
@@ -28,5 +28,7 @@
             android:screenOrientation="portrait" />
 
     </application>
+
+
 
 </manifest>

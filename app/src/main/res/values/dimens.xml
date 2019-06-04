@@ -44,6 +44,12 @@
     <dimen name="font_large_extra">20sp</dimen>
     <dimen name="font_big">22sp</dimen>
     <dimen name="font_huge">24sp</dimen>
+    <dimen name="height_mail_editText">50dp</dimen>
+    <dimen name="dimens_wolox_logo">120dp</dimen>
+    <dimen name="height_password_editText">50dp</dimen>
+    <dimen name="height_signup_button">50dp</dimen>
+    <dimen name="height_login_button">50dp</dimen>
+    <dimen name="space_8dp">8dp</dimen>
 
     <!-- Add your custom dimens here -->
 </resources>

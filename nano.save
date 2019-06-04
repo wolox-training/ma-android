@@ -1,0 +1,6 @@
+Corrections made:
+
+All comments were erased
+MAil and Password constant were created for LOginPresenter class
+Fragment display was corrected to match the orinal one.
+Meaning full comments were written on LoginFragment and LoginACtivity 

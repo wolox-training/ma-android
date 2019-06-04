@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/vMailInput"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_mail_editText"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:gravity="center"
+        android:hint="@string/hint_mail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/rightVerticalGuideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/leftVerticalguideline"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
+        app:layout_constraintVertical_bias="0.075" />
+
+    <ImageView
+        android:id="@+id/imageViewFoto"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/ImageGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_cover" />
+
+    <ImageView
+        android:id="@+id/imageGradient"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.85"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/ImageGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_banner_gradient" />
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="@dimen/dimens_wolox_logo"
+        android:layout_height="@dimen/dimens_wolox_logo"
+        app:layout_constraintBottom_toBottomOf="@+id/ImageGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ImageGuideline"
+        app:srcCompat="@drawable/wolox_logo_large" />
+
+    <EditText
+        android:id="@+id/vPasswordInput"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_password_editText"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:gravity="center"
+        android:hint="@string/password_hint"
+        android:text=""
+        app:layout_constraintEnd_toStartOf="@+id/rightVerticalGuideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/leftVerticalguideline"
+        app:layout_constraintTop_toBottomOf="@+id/vMailInput" />
+
+    <Button
+        android:id="@+id/vSignupButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_signup_button"
+        android:layout_marginTop="16dp"
+        android:background="@color/blue"
+        android:text="@string/sign_up"
+        app:layout_constraintEnd_toStartOf="@+id/rightVerticalGuideline"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/leftVerticalguideline"
+        app:layout_constraintTop_toBottomOf="@+id/vLoginButton" />
+
+    <Button
+        android:id="@+id/vLoginButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_login_button"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:background="@color/white"
+        android:text="@string/login"
+        app:layout_constraintEnd_toStartOf="@+id/rightVerticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/leftVerticalguideline"
+        app:layout_constraintTop_toBottomOf="@+id/vPasswordInput" />
+
+    <TextView
+        android:id="@+id/vTextViewConditions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/terms_and_conditions"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/rightVerticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/leftVerticalguideline" />
+
+    <TextView
+        android:id="@+id/vLoginTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/height_signup_button"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vSignupButton" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ImageGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2995896" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftVerticalguideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="395dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightVerticalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
