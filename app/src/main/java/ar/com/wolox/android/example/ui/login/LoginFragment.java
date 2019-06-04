@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import javax.inject.Inject;
+
 import ar.com.wolox.android.R;
 import ar.com.wolox.android.example.ui.home.HomeActivity;
 import ar.com.wolox.android.example.ui.signup.SignupActivity;
@@ -61,9 +64,8 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         });
         loginButton.setOnClickListener(v -> {
             if (this.mailAndPasswordInputAreCorrect()) {
+                getPresenter().getUserByMail(mailInput.getText().toString());
                 getPresenter().storeUser(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
-                Intent intent = new Intent(getActivity(), HomeActivity.class);
-                startActivity(intent);
             }
         });
         conditionsTextView.setOnClickListener(new View.OnClickListener() {
@@ -75,8 +77,8 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         });
     }
 
-    /** @return
-     *   mailAndPasswordInputAreCorrect returns true when the user enters a valid email and a password. Otherwise, it returns false.
+    /**
+     * @return mailAndPasswordInputAreCorrect returns true when the user enters a valid email and a password. Otherwise, it returns false.
      */
     private boolean mailAndPasswordInputAreCorrect() {
         if (mailInput.getText().toString().isEmpty()) {
@@ -91,6 +93,35 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
             return false;
         } else {
             return true;
+        }
+    }
+
+    @Override
+    public void onGetUserByMailFinished(Boolean userFound) {
+        if (userFound) {
+            Intent intent = new Intent(getActivity(), HomeActivity.class);
+            startActivity(intent);
+        } else {
+            Toast toast = Toast.makeText(getContext(), "ERROR - Usuario no registrado", Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+}
+
+/*
+class LoginFragment : WolmoFragment<LoginPresenter>(), IExampleView {
+
+    override fun layout(): Int = R.layout.fragment_example
+
+    override fun init() {
+        vLoginButton.isEnabled = false
+    }
+
+    override fun setListeners() {
+        vUsernameInput.onTextChanged { vLoginButton.isEnabled = it.isNotBlank() }
+        vLoginButton.onClickListener {
+            presenter.storeUsername(vUsernameInput.text.toString())
+>>>>>>> Feature: brings every user saved in the api to check if the email entered is already registered.
         }
     }
 }
