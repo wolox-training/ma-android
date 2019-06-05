@@ -4,7 +4,7 @@ import ar.com.wolox.android.R;
 import ar.com.wolox.wolmo.core.activity.WolmoActivity;
 
 /**
- *  Login Activity, in which login fragment is displayed
+ * Login Activity, in which login fragment is displayed
  */
 public class LoginActivity extends WolmoActivity {
 

@@ -10,8 +10,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ar.com.wolox.android.example.API.APIClient;
-import ar.com.wolox.android.example.API.User;
+import ar.com.wolox.android.R;
+import ar.com.wolox.android.example.model.APIClient;
+import ar.com.wolox.android.example.model.User;
 import ar.com.wolox.android.example.network.UserService;
 import ar.com.wolox.wolmo.core.presenter.BasePresenter;
 import retrofit2.Call;
@@ -21,7 +22,6 @@ import retrofit2.Response;
 class LoginPresenter extends BasePresenter<ILoginView> {
 
     private static final String MAIL_KEY = "mail";
-    private static final String PASSWORD_KEY = "password";
     private static final String USER_SESSION_SHARE_PREFERENCE = "user_session";
     private UserService userService;
 
@@ -32,7 +32,8 @@ class LoginPresenter extends BasePresenter<ILoginView> {
 
     String getLastLoggeduser(Activity activity) {
         SharedPreferences sharedPref = activity.getSharedPreferences(USER_SESSION_SHARE_PREFERENCE, Context.MODE_PRIVATE);
-        return sharedPref.getString(MAIL_KEY, null);
+        String mail = sharedPref.getString(MAIL_KEY, null);
+        return mail;
     }
 
     void storeUser(String mail, Activity activity) {
@@ -52,8 +53,8 @@ class LoginPresenter extends BasePresenter<ILoginView> {
             Call<List<User>> call = userService.getUserByMail(mail, password);
             ProgressDialog pd = new ProgressDialog(activity);
             pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setTitle("Conectandose a la API");
-            pd.setMessage("Cargando ... ");
+            pd.setTitle(R.string.connecting_to_api);
+            pd.setMessage(activity.getBaseContext().getResources().getString(R.string.loading));
             pd.show();
             call.enqueue(new Callback<List<User>>() {
                 @Override
@@ -71,6 +72,7 @@ class LoginPresenter extends BasePresenter<ILoginView> {
                 @Override
                 public void onFailure(Call<List<User>> call, Throwable t) {
                     pd.dismiss();
+                    getView().failedApiConnection();
                 }
             });
         } else {

@@ -40,6 +40,10 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
 
     @Override
     public void init() {
+        if ((getPresenter().getLastLoggeduser(getActivity()) != null)) {
+            Intent intent = new Intent(getActivity(), HomeActivity.class);
+            startActivity(intent);
+        }
         View view = this.getView();
         loginButton = view.findViewById(R.id.vLoginButton);
         signupButton = view.findViewById(R.id.vSignupButton);
@@ -49,66 +53,79 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         mailInput.setText(getPresenter().getLastLoggeduser(getActivity()));
         conditionsTextView.setMovementMethod(LinkMovementMethod.getInstance());
         mailInput.setText(getPresenter().getLastLoggeduser(getActivity()));
-        //TODO: Take out comment below as it is unit 2, card 2 resolutions
-        /*if (mail != null) {
-            Intent intent = new Intent(getActivity(), HomeActivity.class);
-            startActivity(intent);
-        } */
     }
+
     /**
      * set listeners
      */
     @Override
     public void setListeners() {
         signupButton.setOnClickListener(v -> {
-            if (this.mailAndPasswordInputAreCorrect()) {
-                getPresenter().storeUser(mailInput.getText().toString(), getActivity());
+            this.clearSetErrorMessages();
+            if (this.mailIsCorrect()) {
                 Intent intent = new Intent(getActivity(), SignupActivity.class);
                 startActivity(intent);
             }
         });
         loginButton.setOnClickListener(v -> {
+            this.clearSetErrorMessages();
             if (this.mailAndPasswordInputAreCorrect()) {
                 getPresenter().getUserByMail(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
-                //getPresenter().getUserByMailOld(mailInput.getText().toString());
             }
         });
-        conditionsTextView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                browserIntent.setData(Uri.parse("http://www.wolox.com.ar"));
-                startActivity(browserIntent);
-            }
+        conditionsTextView.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+            browserIntent.setData(Uri.parse("http://www.wolox.com.ar"));
+            startActivity(browserIntent);
         });
     }
 
+    public void clearSetErrorMessages() {
+        mailInput.setError(null);
+        passwordInput.setError(null);
+    }
+
     /**
-     * @return mailAndPasswordInputAreCorrect returns true when the user enters a valid email and a password. Otherwise, it returns false.
+     * @return true when the user enters a valid email and a password. Otherwise, it returns false.
      */
     private boolean mailAndPasswordInputAreCorrect() {
+        if (this.mailIsCorrect()) {
+            if (passwordInput.getText().toString().isEmpty()) {
+                passwordInput.setError(getResources().getString(R.string.password_missing));
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+    /**
+     * @return true when the user enters a valid email. Otherwise, it returns false.
+     */
+    private boolean mailIsCorrect() {
         if (mailInput.getText().toString().isEmpty()) {
-            mailInput.setError("Es necesario ingresar mail");
-            return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(mailInput.getText().toString()).matches()) {
-            mailInput.requestFocus();
-            mailInput.setError("Un ejemplo de formato válido es example@domain.com");
-            return false;
-        } else if (passwordInput.getText().toString().isEmpty()) {
-            passwordInput.setError(getResources().getString(R.string.login_password_missing));
+            mailInput.setError(getResources().getString(R.string.mail_missing));
             return false;
         } else {
-            return true;
+            if (!Patterns.EMAIL_ADDRESS.matcher(mailInput.getText().toString()).matches()) {
+                mailInput.setError(getResources().getString(R.string.mail_example));
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 
     @Override
-    public void onGetUserByMailFinished(Boolean userFound) {
-        if (userFound) {
+    public void onGetUserByMailFinished(Boolean userIsFound) {
+        if (userIsFound) {
             getPresenter().storeUser(mailInput.getText().toString(), getActivity());
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
         } else {
-            Toast toast = Toast.makeText(getContext(), getResources().getString(R.string.mailOrPasswordIncorrect), Toast.LENGTH_LONG);
+            Toast toast;
+            toast = Toast.makeText(getContext(), getResources().getString(R.string.mail_or_password_are_incorrect), Toast.LENGTH_LONG);
             toast.show();
         }
     }
@@ -120,9 +137,14 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     }
 
     public void cellphoneIsDisconnecteed() {
-        Toast toast = Toast.makeText(getContext(), getResources().getString(R.string.cellphoneDisconnected), Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(getContext(), getResources().getString(R.string.disconnected_cellphone), Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    @Override
+    public void failedApiConnection() {
+        Toast toast = Toast.makeText(getContext(), getResources().getString(R.string.failed_api_connection), Toast.LENGTH_SHORT);
         toast.show();
     }
 
 }
-

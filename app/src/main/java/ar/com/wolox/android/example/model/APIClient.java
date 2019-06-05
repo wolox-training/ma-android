@@ -1,4 +1,4 @@
-package ar.com.wolox.android.example.API;
+package ar.com.wolox.android.example.model;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -11,7 +11,7 @@ public final class APIClient {
     public static Retrofit retrofit;
 
     private APIClient() {
-        //not called aksdjaksd
+
     }
 
     public static Retrofit getRetrofitClient() {

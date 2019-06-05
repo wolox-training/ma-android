@@ -1,30 +1,18 @@
-package ar.com.wolox.android.example.API;
-
-import com.google.gson.annotations.SerializedName;
+package ar.com.wolox.android.example.model;
 
 /**
  * User
  */
 public class User {
-    @SerializedName("id")
     private int id;
-    @SerializedName("username")
     private String username;
-    @SerializedName("email")
     private String email;
-    @SerializedName("password")
     private String password;
-    @SerializedName("picture")
     private String picture;
-    @SerializedName("cover")
     private String cover;
-    @SerializedName("description")
     private String description;
-    @SerializedName("location")
     private String location;
-    @SerializedName("name")
     private String name;
-    @SerializedName("phone")
     private String phone;
 
     public int getId() {
@@ -99,7 +87,4 @@ public class User {
         this.phone = phone;
     }
 
-    public boolean isMyPassword(String inputPassword) {
-        return (password.compareTo(inputPassword) == 0);
-    }
 }
