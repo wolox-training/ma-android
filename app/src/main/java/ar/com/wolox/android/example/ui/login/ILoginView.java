@@ -4,6 +4,4 @@ package ar.com.wolox.android.example.ui.login;
  */
 public interface ILoginView {
 
-    void onSignUpFinished(String message);
-
 }

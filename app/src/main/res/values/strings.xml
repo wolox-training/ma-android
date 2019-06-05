@@ -19,6 +19,6 @@
     <string name="password_hint">Password</string>
     <string name="login">LOG IN</string>
     <string name="hint_mail">Mail</string>
-    <string name="terms_and_conditions">By joining you agree to our Terms and Conditions</string>
+    <string name="terms_and_conditions">By joining you agree to our <a href="https://www.wolox.com.ar/">Terms and Conditions</a></string>
 
 </resources>
