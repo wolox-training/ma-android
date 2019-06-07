@@ -1,32 +1,31 @@
 package ar.com.wolox.android.example.ui.login;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-
-import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-import ar.com.wolox.android.R;
 import ar.com.wolox.android.example.model.APIClient;
-import ar.com.wolox.android.example.model.User;
+import ar.com.wolox.android.example.network.APIAdapter;
+import ar.com.wolox.android.example.network.OnLoginListener;
 import ar.com.wolox.android.example.network.UserService;
 import ar.com.wolox.wolmo.core.presenter.BasePresenter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-class LoginPresenter extends BasePresenter<ILoginView> {
+/**
+ * Login Presenter
+ */
+public class LoginPresenter extends BasePresenter<ILoginView> implements OnLoginListener {
 
     private static final String MAIL_KEY = "mail";
     private static final String USER_SESSION_SHARE_PREFERENCE = "user_session";
     private UserService userService;
+    private APIAdapter apiAdapter;
 
     @Inject
-    LoginPresenter() {
+    LoginPresenter(APIAdapter apiAdapter) {
+        this.apiAdapter = apiAdapter;
         userService = APIClient.getRetrofitClient().create(UserService.class);
     }
 
@@ -43,41 +42,44 @@ class LoginPresenter extends BasePresenter<ILoginView> {
         editor.commit();
     }
 
-    public boolean checkInternetConnection(Activity activity) {
-        ConnectivityManager con = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return (con.getActiveNetworkInfo() != null && con.getActiveNetworkInfo().isAvailable() && con.getActiveNetworkInfo().isConnected());
-    }
-
-    public void getUserByMail(String mail, String password, Activity activity) {
-        if (checkInternetConnection(activity)) {
-            Call<List<User>> call = userService.getUserByMail(mail, password);
-            ProgressDialog pd = new ProgressDialog(activity);
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setTitle(R.string.connecting_to_api);
-            pd.setMessage(activity.getBaseContext().getResources().getString(R.string.loading));
-            pd.show();
-            call.enqueue(new Callback<List<User>>() {
-                @Override
-                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                    if (response.body() != null) {
-                        if (response.body().size() != 0) {
-                            getView().onGetUserByMailFinished(true);
-                        } else {
-                            getView().onGetUserByMailFinished(false);
-                        }
-                    }
-                    pd.dismiss();
-                }
-
-                @Override
-                public void onFailure(Call<List<User>> call, Throwable t) {
-                    pd.dismiss();
-                    getView().failedApiConnection();
-                }
-            });
+    public boolean mailIsCorrect(String mail) {
+        if (mail.isEmpty()) {
+            return false;
         } else {
-            getView().cellphoneIsDisconnecteed();
+            String emailRegEx;
+            Pattern pattern;
+            emailRegEx = "^[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,4}$";
+            pattern = Pattern.compile(emailRegEx);
+            return pattern.matcher(mail).matches();
         }
     }
 
+    public void dismissLoading() {
+        getView().dismissLoading();
+    }
+
+    public void getUserByMail(String mail, String password) {
+        if (mailIsCorrect(mail)) {
+            apiAdapter.getUserById(mail, password, this);
+            getView().showLoading();
+        }
+    }
+
+    @Override
+    public void onLoginSuccess() {
+        dismissLoading();
+        getView().onGetUserByMailFinished(true);
+    }
+
+    @Override
+    public void onLoginUserNotFound() {
+        dismissLoading();
+        getView().onGetUserByMailFinished(false);
+    }
+
+    @Override
+    public void onLoginFail() {
+        dismissLoading();
+        getView().failedApiConnection();
+    }
 }
