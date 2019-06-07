@@ -1,6 +1,14 @@
 package ar.com.wolox.android.example.ui.login;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+<<<<<<< 12edb864b678ee8f751a42c1dc364e5d394047ac
+=======
+import android.net.ConnectivityManager;
+import android.net.Uri;
+>>>>>>> Unit test finished
 import android.text.method.LinkMovementMethod;
 import android.util.Patterns;
 import android.view.View;
@@ -26,6 +34,7 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     private EditText passwordInput;
     private EditText mailInput;
     private TextView conditionsTextView;
+    private ProgressDialog pd;
 
     @Inject
     LoginFragment() {
@@ -69,9 +78,19 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         loginButton.setOnClickListener(v -> {
             this.clearSetErrorMessages();
             if (this.mailAndPasswordInputAreCorrect()) {
-                getPresenter().getUserByMail(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
+                if (checkInternetConnection(requireActivity())) {
+                    getPresenter().getUserByMail(mailInput.getText().toString(), passwordInput.getText().toString());
+                } else {
+                    cellphoneIsDisconnecteed();
+                }
             }
         });
+    }
+
+    public boolean checkInternetConnection(Activity activity) {
+        ConnectivityManager con = (ConnectivityManager)
+                activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return (con.getActiveNetworkInfo() != null && con.getActiveNetworkInfo().isAvailable() && con.getActiveNetworkInfo().isConnected());
     }
 
     public void clearSetErrorMessages() {
@@ -94,6 +113,7 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
             return false;
         }
     }
+
     /**
      * @return true when the user enters a valid email. Otherwise, it returns false.
      */
@@ -102,11 +122,11 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
             mailInput.setError(getResources().getString(R.string.mail_missing));
             return false;
         } else {
-            if (!Patterns.EMAIL_ADDRESS.matcher(mailInput.getText().toString()).matches()) {
+            if (Patterns.EMAIL_ADDRESS.matcher(mailInput.getText().toString()).matches()) {
+                return true;
+            } else {
                 mailInput.setError(getResources().getString(R.string.mail_example));
                 return false;
-            } else {
-                return true;
             }
         }
     }
@@ -140,4 +160,19 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         Toast toast = Toast.makeText(getContext(), getResources().getString(R.string.failed_api_connection), Toast.LENGTH_SHORT);
         toast.show();
     }
+
+    @Override
+    public void showLoading() {
+        pd = new ProgressDialog(requireActivity());
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pd.setTitle(R.string.connecting_to_api);
+        pd.setMessage(requireActivity().getBaseContext().getResources().getString(R.string.loading));
+        pd.show();
+    }
+
+    @Override
+    public void dismissLoading() {
+        pd.dismiss();
+    }
+
 }
