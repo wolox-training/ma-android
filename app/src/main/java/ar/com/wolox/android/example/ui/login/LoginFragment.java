@@ -4,11 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-<<<<<<< 12edb864b678ee8f751a42c1dc364e5d394047ac
-=======
 import android.net.ConnectivityManager;
-import android.net.Uri;
->>>>>>> Unit test finished
 import android.text.method.LinkMovementMethod;
 import android.util.Patterns;
 import android.view.View;
