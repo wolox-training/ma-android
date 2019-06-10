@@ -25,5 +25,8 @@
     <string name="connecting_to_api">Conectandose a la API</string>
     <string name="loading">Cargando ...</string>
     <string name="failed_api_connection">Error - No se pudo conectar con el servidor</string>
+    <string name="wolox">Wolox</string>
+    <string name="news">News</string>
+    <string name="profile">Profile</string>
 
 </resources>
