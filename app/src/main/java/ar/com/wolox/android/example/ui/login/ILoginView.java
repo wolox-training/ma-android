@@ -9,8 +9,6 @@ public interface ILoginView {
     void onGetUserByMailFinished(Boolean userIsFound);
     void cellphoneIsDisconnecteed();
     void failedApiConnection();
-
     void showLoading();
-
     void dismissLoading();
 }
