@@ -12,6 +12,7 @@ import ar.com.wolox.android.R
 class NewsFragment : Fragment() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private var listOfNews: ArrayList<News> = ArrayList<News>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,12 +28,27 @@ class NewsFragment : Fragment() {
             adapter = viewAdapter
         }
         */
-        return inflater.inflate(R.layout.fragment_news, container, false)
+        // homeRecyclerView.
+        this.fillArrayListNews()
+        var view: View = inflater.inflate(R.layout.fragment_news, container, false)
+        // var homeRecyclerViewWithR: RecyclerView = R.id.homeRecyclerView as RecyclerView
+        var homeRecyclerViewWithR: RecyclerView = view.findViewById(R.id.homeRecyclerView) as RecyclerView
+        homeRecyclerViewWithR?.adapter = HomeRecyclerViewAdapter(listOfNews)
+        homeRecyclerViewWithR?.layoutManager = LinearLayoutManager(this.context) as RecyclerView.LayoutManager?
+        // homeRecyclerView?.layoutManager = LinearLayoutManager(context)
+        // homeRecyclerView?.adapter = HomeRecyclerViewAdapter(news)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewManager = LinearLayoutManager(activity)
+        /*viewManager = LinearLayoutManager(activity)
         var listOfNews: ArrayList<News> = ArrayList<News>()
         viewAdapter = HomeRecyclerViewAdapter(listOfNews)
+        */
+    }
+
+    fun fillArrayListNews() {
+        var news: News = News("Ali Connors", "I'll be in your .. ", "15 min")
+        listOfNews.add(news)
     }
 }

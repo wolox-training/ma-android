@@ -46,7 +46,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setupViewPager() {
         val adapter = HomeFragmentAdapter(getSupportFragmentManager())
         var newsFragment: NewsFragment = NewsFragment()
-        var profilaFragment: ProfilaFragment = ProfilaFragment()
+        var profilaFragment: ProfileFragment = ProfileFragment()
         adapter.addFragment(newsFragment, NEWS)
         adapter.addFragment(profilaFragment, PROFILE)
         homeViewPager!!.adapter = adapter

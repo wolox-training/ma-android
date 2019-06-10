@@ -1,3 +1,3 @@
 package ar.com.wolox.android.example.ui.home
 
-class News(author: String, text: String, time: String)
+class News(var author: String, var newsText: String, var time: String)
