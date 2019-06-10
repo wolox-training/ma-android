@@ -1,7 +1,6 @@
 package ar.com.wolox.android.example.ui.login;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.text.method.LinkMovementMethod;
 import android.util.Patterns;
 import android.view.View;
@@ -73,11 +72,6 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
                 getPresenter().getUserByMail(mailInput.getText().toString(), passwordInput.getText().toString(), getActivity());
             }
         });
-        conditionsTextView.setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-            browserIntent.setData(Uri.parse("http://www.wolox.com.ar"));
-            startActivity(browserIntent);
-        });
     }
 
     public void clearSetErrorMessages() {
@@ -146,5 +140,4 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         Toast toast = Toast.makeText(getContext(), getResources().getString(R.string.failed_api_connection), Toast.LENGTH_SHORT);
         toast.show();
     }
-
 }

@@ -11,11 +11,8 @@ import retrofit2.http.Query;
  * User service - Interface used with retrofit
  */
 public interface UserService {
-    String USERS_COLLECTION = "/users";
-    String EMAIL = "email";
-    String PASSWORD = "password";
 
-    @GET(USERS_COLLECTION)
-    Call<List<User>> getUserByMail(@Query(EMAIL) String mail, @Query(PASSWORD) String password);
+    @GET("/users")
+    Call<List<User>> getUserByMail(@Query("email") String mail, @Query("password") String password);
 
 }
