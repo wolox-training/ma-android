@@ -28,5 +28,6 @@
     <string name="wolox">Wolox</string>
     <string name="news">News</string>
     <string name="profile">Profile</string>
+    <string name="author">Author</string>
 
 </resources>
