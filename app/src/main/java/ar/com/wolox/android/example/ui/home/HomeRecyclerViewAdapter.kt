@@ -1,12 +1,13 @@
 package ar.com.wolox.android.example.ui.home
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ar.com.wolox.android.R
+import com.facebook.drawee.view.SimpleDraweeView
 
 class HomeRecyclerViewAdapter(val listOfNews: ArrayList<News>) : RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder>() {
 
@@ -14,7 +15,7 @@ class HomeRecyclerViewAdapter(val listOfNews: ArrayList<News>) : RecyclerView.Ad
         // val v = LayoutInflater.from(parent.context).inflate(R.layout.news_item, parent, false)
         // return ViewHolder(v)
         // return UserViewHolder(inflate(ar.com.wolox.android.R.layout.item_user, parent), getListener())
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.news_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(ar.com.wolox.android.R.layout.news_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -26,6 +27,9 @@ class HomeRecyclerViewAdapter(val listOfNews: ArrayList<News>) : RecyclerView.Ad
         val news: News = listOfNews[position]
         holder.author.text = news.title
         holder.newsText.text = news.text
+        holder.time.text = news.getTimeReference()
+        // Gets image with fresco
+        holder.draweeViewNews.setImageURI(Uri.parse(news.picture))
         // holder.time.text = news.time
     }
 
@@ -34,10 +38,10 @@ class HomeRecyclerViewAdapter(val listOfNews: ArrayList<News>) : RecyclerView.Ad
         val time = ar.com.wolox.android.R.id.textViewTime as TextView
         val newsText = ar.com.wolox.android.R.id.textViewText as TextView
         */
-        var author = itemView.findViewById(R.id.textViewAuthor) as TextView
-        var time = itemView.findViewById(R.id.textViewTime) as TextView
-        var newsText = itemView.findViewById(R.id.textViewText) as TextView
-        var imageViewHeart: ImageView = itemView.findViewById(R.id.imageViewHeart)
-        var imageViewNews: ImageView = itemView.findViewById(R.id.imageViewNews)
+        var author = itemView.findViewById(ar.com.wolox.android.R.id.textViewAuthor) as TextView
+        var time = itemView.findViewById(ar.com.wolox.android.R.id.textViewTime) as TextView
+        var newsText = itemView.findViewById(ar.com.wolox.android.R.id.textViewText) as TextView
+        var imageViewHeart: ImageView = itemView.findViewById(ar.com.wolox.android.R.id.imageViewHeart)
+        val draweeViewNews = itemView.findViewById(ar.com.wolox.android.R.id.newsImageView) as SimpleDraweeView
     }
 }

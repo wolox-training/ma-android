@@ -66,6 +66,9 @@ public class APIAdapter {
                     if (response.body().size() != 0) {
                         //List<News> listOfNews = response.body() is ArrayList<News>
                         ArrayList<News> listOfNews = (ArrayList<News>) response.body();
+                        News news = listOfNews.get(0);
+                        //DateTime dt = news.getTimeReference();
+                        String ago = news.getTimeReference();
                         listener.onGetNewsSuccess(listOfNews);
                     } else {
                         listener.onGetNewsNotFound();

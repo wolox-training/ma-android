@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ar.com.wolox.android.R
 import ar.com.wolox.android.example.network.APIAdapter
+import com.melnykov.fab.FloatingActionButton
 
 class NewsFragment : Fragment(), IFragmentNews {
 
@@ -25,8 +25,19 @@ class NewsFragment : Fragment(), IFragmentNews {
         // var view: View = inflater.inflate(R.layout.fragment_news, container, false)
         // var homeRecyclerViewWithR: RecyclerView = R.id.homeRecyclerView as RecyclerView
         // return inflater.inflate(R.layout.fragment_news, container, false) as View
-        var view: View = inflater.inflate(R.layout.fragment_news, container, false)
+        var view: View = inflater.inflate(ar.com.wolox.android.R.layout.fragment_news, container, false)
         // TODO: CHANGE THIS
+        var fab: FloatingActionButton = view.findViewById(ar.com.wolox.android.R.id.fab) as FloatingActionButton
+        var homeRecyclerView: RecyclerView = view.findViewById(ar.com.wolox.android.R.id.homeRecyclerView) as RecyclerView
+        fab?.attachToRecyclerView(homeRecyclerView)
+        // TODO: CHANGE THIS
+        fab.setOnClickListener() {
+            val fragmentManager = fragmentManager
+            val transaction = fragmentManager!!.beginTransaction()
+            transaction.replace(ar.com.wolox.android.R.id.fragmentNews, FragmentCreateNews())
+            transaction.addToBackStack(FragmentCreateNews::class.java!!.getSimpleName())
+            transaction.commit()
+        }
         var presenter: HomePresenter = HomePresenter(APIAdapter())
         presenter.getNews()
         return view
@@ -46,7 +57,7 @@ class NewsFragment : Fragment(), IFragmentNews {
     }
     */
     override fun onGetNewsSuccess(listOfNews: ArrayList<News>?) {
-        var homeRecyclerViewWithR: RecyclerView = view?.findViewById(R.id.homeRecyclerView) as RecyclerView
+        var homeRecyclerViewWithR: RecyclerView = view?.findViewById(ar.com.wolox.android.R.id.homeRecyclerView) as RecyclerView
         homeRecyclerViewWithR?.adapter = HomeRecyclerViewAdapter(listOfNews as ArrayList<News>)
         homeRecyclerViewWithR?.layoutManager = LinearLayoutManager(this.context) as RecyclerView.LayoutManager?
     }

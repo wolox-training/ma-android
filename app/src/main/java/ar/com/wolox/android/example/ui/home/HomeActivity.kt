@@ -2,6 +2,7 @@ package ar.com.wolox.android.example.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -14,6 +15,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ar.com.wolox.android.R.layout.activity_home)
+        Fresco.initialize(this)
         this.setupViewPager()
         tabLayout.getTabAt(0)!!.setIcon(ar.com.wolox.android.R.drawable.ic_news_list_on)
         tabLayout.getTabAt(1)!!.setIcon(ar.com.wolox.android.R.drawable.ic_profile_off)
@@ -52,4 +54,12 @@ class HomeActivity : AppCompatActivity() {
         homeViewPager!!.adapter = adapter
         tabLayout!!.setupWithViewPager(homeViewPager)
     }
+
+    /*
+    override fun onBackPressed(){
+        super.onBackPressed()
+        val fragmentManager  : FragmentManager = getSupportFragmentManager()
+        val fragmentCreateNews : FragmentCreateNews =  fragmentManager.getFragments()
+    }
+    */
 }
