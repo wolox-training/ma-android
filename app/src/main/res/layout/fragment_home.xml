@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/vhomeFragment"
     tools:ignore="ExtraText">
 
     <androidx.appcompat.widget.Toolbar
@@ -20,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/logoXmarks"
+        android:id="@+id/vWoloxLogo"
         android:layout_width="@dimen/spacing_huge_extra"
         android:layout_height="0dp"
         android:adjustViewBounds="true"

@@ -53,6 +53,8 @@
     <dimen name="news_text_width">275dp</dimen>
     <dimen name="news_text_height">30dp</dimen>
     <dimen name="news_title_width">260dp</dimen>
+    <dimen name="height_news_item">70dp</dimen>
+    <dimen name="news_picture_corner_radius">6dp</dimen>
 
 
     <!-- Add your custom dimens here -->

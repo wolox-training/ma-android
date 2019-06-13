@@ -4,6 +4,7 @@ import android.app.Application
 import ar.com.wolox.android.example.BootstrapApplication
 import ar.com.wolox.android.example.di.module.MiscModule
 import ar.com.wolox.android.example.ui.home.HomeModule
+import ar.com.wolox.android.example.ui.home.News.Create.CreateNewsModule
 import ar.com.wolox.android.example.ui.login.LoginModule
 import ar.com.wolox.android.example.ui.viewpager.ViewPagerActivityModule
 import ar.com.wolox.wolmo.core.di.modules.ContextModule
@@ -18,7 +19,7 @@ import dagger.android.support.AndroidSupportInjectionModule
 @ApplicationScope
 @Component(dependencies = [NetworkingComponent::class],
         modules = [AndroidSupportInjectionModule::class, DefaultModule::class, ContextModule::class,
-            AppModule::class, ViewPagerActivityModule::class, MiscModule::class, LoginModule::class, HomeModule::class])
+            AppModule::class, ViewPagerActivityModule::class, MiscModule::class, LoginModule::class, HomeModule::class, CreateNewsModule::class])
 interface AppComponent : AndroidInjector<BootstrapApplication> {
 
     @Component.Builder

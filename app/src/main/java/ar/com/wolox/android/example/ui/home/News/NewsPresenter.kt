@@ -18,10 +18,8 @@ class NewsPresenter @Inject constructor(
                             view.setNews(it)
                         }
                     }
-
                     onResponseFailed { _, _ -> runIfViewAttached(Runnable { view.showError() }) }
-
-                    onCallFailure { runIfViewAttached(Runnable { view.showError() }) }
+                    onCallFailure { runIfViewAttached(Runnable { view.showErrorFailToCOnnectWithAPI() }) }
                 }
         )
     }

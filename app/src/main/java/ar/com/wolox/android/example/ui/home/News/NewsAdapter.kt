@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ar.com.wolox.android.R
 import ar.com.wolox.android.example.model.News
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
@@ -27,6 +29,10 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
         this.listOfNews.addAll(listOfNews)
     }
 
+    fun clear() {
+        this.listOfNews.clear()
+    }
+
     fun addNews(listOfNews: List<News>) {
         this.listOfNews.addAll(listOfNews)
     }
@@ -34,7 +40,6 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
     override fun getItemCount(): Int {
         return listOfNews.size
     }
-    var urls = arrayOf("http://bucket1.glanacion.com/anexos/fotos/70/dia-del-amigo-2236070w620.jpg", "", "", "")
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val news: News = listOfNews[position]
@@ -42,9 +47,11 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
         holder.newsText.text = news.text
         holder.time.text = news.getTimeReference()
         var url: String = news.picture
-        // Glide.with(holder.newsPicture.context).load("https://s3.amazonaws.com/appsdeveloperblog/Micky.jpg")
-        Glide.with(holder.newsPicture.context).load(urls[position])
-                .override(225, 225)
+        url = url.substring(0, 4) + "s" + url.substring(4, url.length)
+        // the url must be https//. Otherwise, it does not work
+        val radius = context.resources.getDimensionPixelSize(R.dimen.news_picture_corner_radius)
+        Glide.with(holder.newsPicture.context).load(url)
+                .transform(RoundedCorners(radius))
                 .into(holder.newsPicture)
     }
 
@@ -53,10 +60,5 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
         var time = itemView.findViewById(ar.com.wolox.android.R.id.vTextViewNewsTime) as TextView
         var newsText = itemView.findViewById(ar.com.wolox.android.R.id.vTextViewNewsText) as TextView
         val newsPicture = itemView.findViewById(ar.com.wolox.android.R.id.vImageViewNewsPicture) as ImageView
-    }
-
-    companion object {
-        const val MAX_LENGTH_TITLE = 15
-        const val MAX_LENGTH_TEXT = 80
     }
 }

@@ -32,10 +32,6 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     private TextView conditionsTextView;
     private ProgressDialog pd;
 
-    /*@Inject
-    HomeActivity homeActivity;
-    */
-
     @Inject
     LoginFragment() {
 

@@ -10,6 +10,6 @@ import ar.com.wolox.android.example.model.News;
 public interface IFragmentNews {
 
     void showError();
-
     void setNews(List<News> response);
+    void showErrorFailToCOnnectWithAPI();
 }
