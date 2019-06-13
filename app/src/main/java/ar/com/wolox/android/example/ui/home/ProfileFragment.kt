@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ar.com.wolox.android.R
+import javax.inject.Inject
 
-class ProfileFragment : Fragment() {
+class ProfileFragment @Inject constructor() : Fragment() {
+// class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

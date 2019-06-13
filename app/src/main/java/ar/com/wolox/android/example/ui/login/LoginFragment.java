@@ -32,6 +32,10 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     private TextView conditionsTextView;
     private ProgressDialog pd;
 
+    /*@Inject
+    HomeActivity homeActivity;
+    */
+
     @Inject
     LoginFragment() {
 
@@ -45,6 +49,7 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     @Override
     public void init() {
         if ((getPresenter().getLastLoggeduser(getActivity()) != null)) {
+            //Intent intent = new Intent(getActivity(), HomeActivity.class);  activityInjector().inject(activity)
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
         }
@@ -58,7 +63,6 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         conditionsTextView.setMovementMethod(LinkMovementMethod.getInstance());
         mailInput.setText(getPresenter().getLastLoggeduser(getActivity()));
     }
-
     /**
      * set listeners
      */

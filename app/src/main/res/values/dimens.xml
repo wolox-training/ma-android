@@ -50,6 +50,10 @@
     <dimen name="height_signup_button">50dp</dimen>
     <dimen name="height_login_button">50dp</dimen>
     <dimen name="space_8dp">8dp</dimen>
+    <dimen name="news_text_width">275dp</dimen>
+    <dimen name="news_text_height">30dp</dimen>
+    <dimen name="news_title_width">260dp</dimen>
+
 
     <!-- Add your custom dimens here -->
 </resources>

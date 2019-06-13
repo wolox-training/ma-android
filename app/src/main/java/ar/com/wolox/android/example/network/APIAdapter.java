@@ -1,14 +1,11 @@
 package ar.com.wolox.android.example.network;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import ar.com.wolox.android.example.model.APIClient;
 import ar.com.wolox.android.example.model.User;
-import ar.com.wolox.android.example.ui.home.News;
-import ar.com.wolox.android.example.ui.home.OnHomeNewsListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,36 +49,4 @@ public class APIAdapter {
             }
         });
     }
-
-    /**
-     * @param listener - Used to interact with HomePresenter
-     */
-    public void getNews(OnHomeNewsListener listener) {
-        //newsService = APIClient.getRetrofitClient().create(UserService.class);
-        Call<List<News>> call = (Call<List<News>>) newsService.getNews();
-        call.enqueue(new Callback<List<News>>() {
-            @Override
-            public void onResponse(Call<List<News>> call, Response<List<News>> response) {
-                if (response.body() != null) {
-                    if (response.body().size() != 0) {
-                        //List<News> listOfNews = response.body() is ArrayList<News>
-                        ArrayList<News> listOfNews = (ArrayList<News>) response.body();
-                        News news = listOfNews.get(0);
-                        //DateTime dt = news.getTimeReference();
-                        String ago = news.getTimeReference();
-                        listener.onGetNewsSuccess(listOfNews);
-                    } else {
-                        listener.onGetNewsNotFound();
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<News>> call, Throwable t) {
-                listener.onGetNewsFailed();
-            }
-        });
-    }
-
 }
