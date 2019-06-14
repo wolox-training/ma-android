@@ -1,5 +1,6 @@
 package ar.com.wolox.android.example.ui.login
 
+import ar.com.wolox.android.example.network.APIAdapter
 import ar.com.wolox.android.example.utils.UserSession
 import org.junit.Before
 import org.junit.Test
@@ -15,7 +16,7 @@ class ExamplePresenterTest {
     fun createInstances() {
         mExampleView = mock(ILoginView::class.java)
         mUserSession = mock(UserSession::class.java)
-        mExamplePresenter = LoginPresenter()
+        mExamplePresenter = LoginPresenter(mock(APIAdapter::class.java))
     }
 
     @Test
