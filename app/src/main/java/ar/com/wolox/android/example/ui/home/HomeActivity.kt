@@ -7,13 +7,12 @@ import javax.inject.Inject
 /**
  * Home activity
  */
-@Suppress("CAST_NEVER_SUCCEEDS")
 class HomeActivity @Inject constructor() : WolmoActivity() {
 
     override fun layout(): Int = ar.com.wolox.android.R.layout.activity_base
 
     override fun init() {
-        replaceFragment(ar.com.wolox.android.R.id.vActivityBaseContent, HomeFragment.newInstance(), "Home Fragment")
+        replaceFragment(ar.com.wolox.android.R.id.vActivityBaseContent, HomeFragment.newInstance())
     }
 
     fun switchToCreateNewsFragment() {

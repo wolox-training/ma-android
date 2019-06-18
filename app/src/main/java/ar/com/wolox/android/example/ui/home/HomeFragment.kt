@@ -24,9 +24,8 @@ class HomeFragment @Inject constructor() : WolmoFragment<BasePresenter<Any>>() {
     override fun init() {
         fragmentPagerAdapter = SimpleFragmentPagerAdapter(childFragmentManager)
         fragmentPagerAdapter.addFragments(
-                Pair<Fragment, String>(newsFragment, "News"),
-                Pair<Fragment, String>(profileFragment, "Profile"))
-
+                Pair<Fragment, String>(newsFragment, resources.getString(R.string.news)),
+                Pair<Fragment, String>(profileFragment, resources.getString(R.string.profile)))
         vHomeTabLayout.setupWithViewPager(vHomeViewPager)
         vHomeViewPager.adapter = fragmentPagerAdapter
         vHomeTabLayout.getTabAt(0)!!.setIcon(R.drawable.selector_icon_news)

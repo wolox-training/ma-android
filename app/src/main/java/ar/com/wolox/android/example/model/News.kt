@@ -14,7 +14,6 @@ data class News(
     @SerializedName("createdAt")
     var createdAt: String,
     var title: String,
-    @SerializedName("picture")
     var picture: String,
     var text: String
 ) {

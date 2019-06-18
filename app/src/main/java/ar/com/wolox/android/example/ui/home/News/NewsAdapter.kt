@@ -42,17 +42,19 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val news: News = listOfNews[position]
-        holder.author.text = news.title
-        holder.newsText.text = news.text
-        holder.time.text = news.getTimeReference()
+        val news = listOfNews[position]
         var url: String = news.picture
-        url = url.substring(0, 4) + "s" + url.substring(4, url.length)
         // the url must be https//. Otherwise, it does not work
+        url = url.substring(0, 4) + "s" + url.substring(4, url.length)
         val radius = context.resources.getDimensionPixelSize(R.dimen.news_picture_corner_radius)
-        Glide.with(holder.newsPicture.context).load(url)
-                .transform(RoundedCorners(radius))
-                .into(holder.newsPicture)
+        holder.apply {
+            author.text = news.title
+            newsText.text = news.text
+            time.text = news.getTimeReference()
+            Glide.with(holder.newsPicture.context).load(url)
+                    .transform(RoundedCorners(radius))
+                    .into(holder.newsPicture)
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

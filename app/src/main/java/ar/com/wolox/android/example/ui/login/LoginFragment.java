@@ -45,7 +45,6 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     @Override
     public void init() {
         if ((getPresenter().getLastLoggeduser(getActivity()) != null)) {
-            //Intent intent = new Intent(getActivity(), HomeActivity.class);  activityInjector().inject(activity)
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
         }

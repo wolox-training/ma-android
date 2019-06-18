@@ -29,5 +29,6 @@
     <string name="news">News</string>
     <string name="profile">Profile</string>
     <string name="news_title">Title</string>
+    <string name="time">Time</string>
 
 </resources>
