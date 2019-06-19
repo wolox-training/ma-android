@@ -7,5 +7,8 @@ import dagger.android.ContributesAndroidInjector
 abstract class CreateNewsModule {
 
     @ContributesAndroidInjector
+    internal abstract fun createNewsActivity(): CreateNewsActivity
+
+    @ContributesAndroidInjector
     internal abstract fun createNewsFragment(): CreateNewsFragment
 }

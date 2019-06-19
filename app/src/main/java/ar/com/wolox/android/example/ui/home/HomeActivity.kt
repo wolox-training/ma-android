@@ -15,11 +15,4 @@ class HomeActivity @Inject constructor() : WolmoActivity() {
     override fun init() {
         replaceFragment(ar.com.wolox.android.R.id.vActivityBaseContent, HomeFragment.newInstance())
     }
-
-    fun switchToCreateNewsFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(ar.com.wolox.android.R.id.vActivityBaseContent, CreateNewsFragment())
-                .addToBackStack(null)
-                .commit()
-    }
 }

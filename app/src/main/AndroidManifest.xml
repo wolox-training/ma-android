@@ -12,6 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity android:name=".example.ui.home.HomeActivity"></activity>
+        <activity android:name=".example.ui.home.News.Create.CreateNewsActivity"></activity>
         <activity android:name=".example.ui.signup.SignupActivity"></activity>
         <activity
             android:name=".example.ui.login.LoginActivity"
