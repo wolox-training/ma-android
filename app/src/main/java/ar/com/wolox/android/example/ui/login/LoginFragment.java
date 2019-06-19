@@ -58,6 +58,7 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
         conditionsTextView.setMovementMethod(LinkMovementMethod.getInstance());
         mailInput.setText(getPresenter().getLastLoggeduser(getActivity()));
     }
+
     /**
      * set listeners
      */
@@ -129,7 +130,6 @@ public class LoginFragment extends WolmoFragment<LoginPresenter> implements ILog
     @Override
     public void onGetUserByMailFinished(Boolean userIsFound) {
         if (userIsFound) {
-            getPresenter().storeUser(mailInput.getText().toString(), getActivity());
             Intent intent = new Intent(getActivity(), HomeActivity.class);
             startActivity(intent);
         } else {

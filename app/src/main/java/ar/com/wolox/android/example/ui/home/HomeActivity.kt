@@ -2,6 +2,7 @@ package ar.com.wolox.android.example.ui.home
 
 import ar.com.wolox.android.example.ui.home.News.Create.CreateNewsFragment
 import ar.com.wolox.wolmo.core.activity.WolmoActivity
+import kotlinx.android.synthetic.main.activity_base.*
 import javax.inject.Inject
 
 /**
